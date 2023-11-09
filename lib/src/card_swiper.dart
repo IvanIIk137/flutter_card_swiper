@@ -126,6 +126,7 @@ class CardSwiper extends StatefulWidget {
   /// Must be a positive value. Defaults to Offset(0, 40).
   final Offset backCardOffset;
   final VoidCallback? onSwipeEnd;
+  final VoidCallback? onSwipeStart;
 
   const CardSwiper({
     Key? key,
@@ -150,6 +151,7 @@ class CardSwiper extends StatefulWidget {
     this.onUndo,
     this.backCardOffset = const Offset(0, 40),
     this.onSwipeEnd,
+    this.onSwipeStart,
   })  : assert(
           maxAngle >= 0 && maxAngle <= 360,
           'maxAngle must be between 0 and 360',
@@ -306,6 +308,9 @@ class _CardSwiperState<T extends Widget> extends State<CardSwiper>
             final position = renderBox.globalToLocal(tapInfo.globalPosition);
 
             if (position.dy < renderBox.size.height / 2) _tappedOnTop = true;
+            if(widget.onSwipeStart!=null){
+              widget.onSwipeStart!();
+            }
           }
         },
         onPanUpdate: (tapInfo) {
